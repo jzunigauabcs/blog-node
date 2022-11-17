@@ -1,18 +1,16 @@
 const express = require("express");
 const app = express();
 
-const blogService = require('./services/blogService')
+const postRouter = require("./routes/post");
 
 const PORT = 3000;
 
-app.get("/post", async (req, res) => {
-		[results] = await blogService.getAll();
-		res.json(results);
-})
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 
-app.get("post/:id", async(req, res) => {
-	[results] = await blogService.get(id)
-})
+//Routes
+const API_V1 = '/api/v1';
+app.use(`${API_V1}/post`, postRouter);
 
 app.listen(PORT, () => {
 	console.log('Connect to server 🖥️');
