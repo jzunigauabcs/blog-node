@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const postService = require('../services/postService')
+const {verifyToken} = require('../middleware/authJwt');
 
-
-router.get("/", async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
 		[results] = await postService.getAll();
 	res.json({ code: 200, message: '', data: results});
 })
